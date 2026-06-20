@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>德州扑克玩法与资讯 · 日常笔记</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f7f3ec;
+      font-family: 'Georgia', 'Times New Roman', '宋体', serif;
+      color: #2c2b28;
+      line-height: 1.7;
+      padding: 2rem 1.2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      max-width: 760px;
+      width: 100%;
+      background: #faf8f4;
+      padding: 2.2rem 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid #d9d2c7;
+    }
+
+    .meta {
+      color: #8a8379;
+      font-size: 0.85rem;
+      margin-bottom: 1.8rem;
+      font-style: italic;
+    }
+
+    p {
+      margin-bottom: 1.4rem;
+      text-indent: 2em;
+    }
+
+    p:first-of-type {
+      text-indent: 0;
+    }
+
+    .intro {
+      font-size: 1.05rem;
+      color: #3d3a35;
+      background: #f1ebe3;
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      text-indent: 0;
+      border-left: 4px solid #bfa98e;
+    }
+
+    .blockquote {
+      background: #efe9e0;
+      padding: 1rem 1.6rem;
+      margin: 1.8rem 0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      color: #4f4a44;
+      border: 1px solid #ddd6cb;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .blockquote p {
+      text-indent: 0;
+      margin-bottom: 0.3rem;
+    }
+
+    .blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-box {
+      background: #e8e0d6;
+      padding: 0.8rem 1.2rem;
+      border-radius: 30px 10px 10px 30px;
+      margin: 1.6rem 0 1.8rem;
+      font-size: 0.95rem;
+      border-left: 5px solid #b5a186;
+    }
+
+    .highlight-box p {
+      text-indent: 0;
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #6f5e4e;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: #c9b8a5;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: #3d3229;
+      text-decoration-color: #8a7a66;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0.5rem;
+      margin: 1.2rem 0 1.8rem;
+    }
+
+    ul li {
+      padding: 0.3rem 0 0.3rem 1.6rem;
+      position: relative;
+      margin-bottom: 0.2rem;
+    }
+
+    ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0.4rem;
+      color: #a18d78;
+      font-weight: bold;
+    }
+
+    .faq-note {
+      background: transparent;
+      border: 1px dashed #cbbca9;
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      margin: 2rem 0 1.4rem;
+    }
+
+    .faq-note p {
+      text-indent: 0;
+      margin-bottom: 0.6rem;
+    }
+
+    .faq-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sig {
+      margin-top: 2.4rem;
+      border-top: 1px solid #ded7cd;
+      padding-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #7a7268;
+      text-align: right;
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 1rem 0.8rem;
+      }
+      .page {
+        padding: 1.5rem 1rem 2rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .intro {
+        padding: 0.9rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>牌桌之外 · 查与读的日常</h1>
+    <div class="meta">笔记 · 对照 · 延伸</div>
+
+    <p class="intro">
+      很多时候我们并不在牌桌上，而是在手机前查阅规则、对比不同平台的玩法，或者只是想找一份清晰的术语表。这篇文章围绕日常查询中的几个片段展开，不追求系统教学，更像一本随手翻开的便签本。
+    </p>
+
+    <p>
+      德州扑克这个游戏，看起来是手牌与公共牌的排列，其实背后是概率、位置、底池赔率还有对手倾向的综合判断。对于多数爱好者来说，重要的不是记住所有起手牌胜率，而是知道在什么场景下该查什么、去哪查。我最早开始系统整理这些内容，就是因为总在手机和网页之间反复切换，索性把需要的页面统一放在一处。
+    </p>
+
+    <p>
+      后来发现，很多人和我有类似习惯——他们并不想每天泡在牌局里，而是需要一份可以随时取用的参考。比如想知道同花连牌在不同位置的价值，或者翻牌圈听牌的概率到底怎么算。这时候，一个结构清晰的索引比零散的论坛帖子好用得多。
+    </p>
+
+    <div class="blockquote">
+      <p>📌 延伸阅读的起点</p>
+      <p>—— 如果你也习惯一边看书一边用手机验证想法，那么一个聚合了基本概念、常见错误和术语对照的页面，会让学习曲线平滑不少。我所参考的<strong>德州扑克app</strong>内容源里，<a href="https://dezhouapps.com">德州扑克app</a>的整理方式相对干净，没有太多干扰信息，适合当作对照基准。</p>
+    </div>
+
+    <p>
+      在日常的查询过程中，我发现最容易被忽略的部分是位置与范围的关联。很多人只记住了大牌，却没有建立“位置越靠后，可玩范围越宽”的意识。于是我在笔记里专门列了一个小表格，把前中后位以及盲注位的建议起手牌范围写下来，每次打开都扫一眼。时间久了，决策速度有明显提高。
+    </p>
+
+    <p>
+      另一个常见需求是术语即时翻译——比如 c-bet、float、donk bet 这些，在中文论坛和英文教材里说法不同。我以前总在多个标签页之间来回跳，后来干脆把对照表存到手机备忘录里。但更省力的方式是直接找一个两边都涵盖的站点，打开即查。
+    </p>
+
+    <div class="highlight-box">
+      <p>🔍 查询习惯小建议：把频繁使用的页面添加到浏览器书签栏，或者用手机主屏快捷方式。每次碰到模糊的概念，点开扫一眼，比重新搜索省下十几秒。</p>
+    </div>
+
+    <p>
+      除了基础规则，我也逐渐把注意力转向一些更细的场景：比如短桌与满员桌的策略差异，或者锦标赛不同阶段的前注结构。这些内容在单一的教程里通常不会展开，但当你玩过几百手牌之后，自然会想深入了解。而一本随时可翻阅的“场边笔记”正好满足这种节奏。
+    </p>
+
+    <ul>
+      <li>起手牌范围与位置关系（早期对照用）</li>
+      <li>常见持续下注尺度参考（翻牌、转牌、河牌）</li>
+      <li>听牌概率速查表（补牌数与成牌率）</li>
+      <li>术语中英文对照及常见误译</li>
+    </ul>
+
+    <div class="faq-note">
+      <p><strong>一些经常被问到的点</strong></p>
+      <p>Q：有必要背下所有起手牌胜率吗？<br>— 不需要，熟悉前20%的牌就够大部分场景使用，关键是知道不同位置该放弃哪些。</p>
+      <p>Q：听牌的时候总是高估自己的胜率怎么办？<br>— 养成习惯先数补牌，再用2/4法则估算，不要凭感觉。</p>
+      <p>Q：想找一个能同时看规则和术语的地方，有推荐吗？<br>— 我平时用的是上面提到的那个站点，条目是直接按主题排列的，没有多余广告。</p>
+    </div>
+
+    <p>
+      说到底，德州扑克的进阶往往不是靠某一次顿悟，而是靠持续、微小的信息补充。每次查阅只多弄懂一个概念，积攒起来就变成了牌感。这篇文章没有讲复杂的策略，只是把一些经常用到、但又容易被忽略的查询场景拎出来——希望你也能找到属于自己的翻阅节奏。
+    </p>
+
+    <div class="sig">
+      写于一个需要频繁对照的夜晚
+    </div>
+  </div>
+</body>
+</html>
