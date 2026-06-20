@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>pg游戏 · 简明指南与访问提醒</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f2f6f9;
+      color: #1d2a3b;
+      line-height: 1.7;
+      padding: 24px 16px 48px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-wrap {
+      max-width: 820px;
+      width: 100%;
+    }
+
+    /* 网格卡片背景点缀 */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(47, 128, 118, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(47, 128, 118, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* hero 区 */
+    .hero {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(145deg, #dfece8 0%, #cde2db 100%);
+      border-radius: 32px;
+      padding: 40px 28px 36px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(29, 42, 59, 0.06);
+      border: 1px solid rgba(47, 128, 118, 0.15);
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #0b3b35;
+      margin-bottom: 8px;
+    }
+
+    .hero .sub {
+      font-size: 1rem;
+      color: #2a5b53;
+      background: rgba(255,255,255,0.6);
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: #1d3b35;
+      max-width: 90%;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 28px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 22px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid #e4ece9;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 20px rgba(47, 128, 118, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .card .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: #deede9;
+      color: #1f6b60;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #0b3b35;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: #3c4f4a;
+    }
+
+    .card a {
+      color: #1a7b6b;
+      text-decoration: none;
+      border-bottom: 1px dotted #8bbbb0;
+      transition: border-color 0.15s;
+    }
+
+    .card a:hover {
+      border-bottom: 1px solid #1a7b6b;
+    }
+
+    /* 正文段落 (博客式) */
+    .blog-body {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 32px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+      border: 1px solid #e6efeb;
+    }
+
+    .blog-body h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #0b3b35;
+      margin: 28px 0 10px;
+      border-left: 4px solid #2b8878;
+      padding-left: 14px;
+    }
+
+    .blog-body h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .blog-body p {
+      margin-bottom: 18px;
+      font-size: 1rem;
+      color: #1d2a3b;
+    }
+
+    .blog-body .highlight {
+      background: #e6f3ef;
+      padding: 16px 20px;
+      border-radius: 18px;
+      border-left: 4px solid #2b8878;
+      margin: 20px 0;
+      font-size: 0.98rem;
+    }
+
+    .blog-body .highlight strong {
+      color: #075249;
+    }
+
+    .quote-tip {
+      background: #f0f7f4;
+      border-radius: 20px;
+      padding: 18px 24px;
+      margin: 24px 0 12px;
+      font-style: normal;
+      border: 1px solid #c8dfd7;
+      color: #25443d;
+      font-size: 0.98rem;
+      position: relative;
+    }
+
+    .quote-tip::before {
+      content: "💡";
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+
+    .visit-sentence {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 24px 28px;
+      margin: 28px 0;
+      border: 1px solid #d7e8e2;
+      box-shadow: 0 4px 12px rgba(47, 128, 118, 0.04);
+      font-size: 1rem;
+      color: #1d2e2a;
+      position: relative;
+      z-index: 1;
+    }
+
+    .visit-sentence a {
+      color: #1a7b6b;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 2px solid #a7d3c9;
+      transition: border-color 0.2s;
+    }
+
+    .visit-sentence a:hover {
+      border-bottom-color: #075249;
+    }
+
+    .faq-mini {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 24px 28px;
+      margin: 28px 0;
+      border: 1px solid #e0ede8;
+    }
+
+    .faq-mini details {
+      margin-bottom: 12px;
+      border-bottom: 1px solid #e2efea;
+      padding-bottom: 10px;
+    }
+
+    .faq-mini details:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .faq-mini summary {
+      font-weight: 600;
+      color: #0b3b35;
+      cursor: pointer;
+      padding: 6px 0;
+      font-size: 0.98rem;
+    }
+
+    .faq-mini summary::-webkit-details-marker {
+      color: #2b8878;
+    }
+
+    .faq-mini p {
+      margin-top: 8px;
+      color: #3b524b;
+      font-size: 0.93rem;
+      padding-left: 6px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      color: #6c857e;
+      border-top: 1px solid #d1e2db;
+      padding-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 响应式 */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+      .hero p {
+        max-width: 100%;
+        font-size: 0.96rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .blog-body {
+        padding: 24px 18px;
+      }
+      .hero {
+        padding: 30px 20px;
+      }
+      .visit-sentence, .faq-mini {
+        padding: 20px 18px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 16px 12px 32px;
+      }
+      .hero h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="page-wrap">
+
+    <!-- hero 区域 -->
+    <div class="hero">
+      <div class="sub">简明指南 · 日常访问提醒</div>
+      <h1>在 pg游戏 里找到自己的节奏</h1>
+      <p>一个从玩家视角出发的小指南，聊聊界面、功能介绍，还有一点实用的访问贴士。</p>
+    </div>
+
+    <!-- 特点卡片网格 -->
+    <div class="card-grid">
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>直观的页面布局</h3>
+        <p>分类、筛选与搜索让浏览更顺手，无论是快速浏览还是细看内容，都能找到合适的入口。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🕹️</div>
+        <h3>内容浏览的节奏</h3>
+        <p>每个页面都经过设计，信息密度适中，不会让人觉得眼花缭乱，停留或跳转都自然。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔐</div>
+        <h3>日常访问意识</h3>
+        <p>记住使用习惯的设备与网络环境，熟悉的操作路径会让每次体验更顺畅。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧩</div>
+        <h3>持续更新的内容</h3>
+        <p>平台不定期会有新内容上线，保持关注就能看到不一样的模块和活动。</p>
+      </div>
+    </div>
+
+    <!-- 博客式正文 -->
+    <div class="blog-body">
+      <h2>从界面开始熟悉</h2>
+      <p>第一次进入 <a href="https://m-pggaming.com">pg游戏</a> 的时候，最直观的感受就是首页的信息层级很清楚。顶部的导航栏把主要区域分成了几块，左侧或底部（移动端）的菜单也不会占用太多视线。其实不用刻意记布局，多用两次就会形成肌肉记忆。</p>
+
+      <p>我个人比较喜欢的是它的分类卡片设计 —— 每个类别都配有图标和简短描述，扫一眼就知道里面大概是什么内容。如果你习惯先看推荐板块，首页中间的区域通常会把当下比较活跃的内容放在前面。</p>
+
+      <div class="highlight">
+        <strong>一点提醒：</strong> 初次访问时不妨花两三分钟把首页从上到下划一遍，大致了解有哪些功能入口。之后每次再来就会觉得特别熟悉。
+      </div>
+
+      <h2>找到适合自己的浏览方式</h2>
+      <p>有人喜欢按分类逐个看，有人更依赖搜索。在 <a href="https://m-pggaming.com">pg游戏</a> 里两种方式都挺顺手。搜索框响应很快，而且支持模糊匹配，记不全名字也没关系。如果你更倾向于漫游式的浏览，那就跟着首页的推荐走，偶尔也会发现一些之前没注意到的内容。</p>
+
+      <p>另外，页面的加载速度整体不错，图片和内容区块都是渐进式出现，不会突然卡住。不过网络环境不稳定时，可以稍微等几秒再操作，避免重复点击。</p>
+
+      <div class="quote-tip">
+        访问时留意一下地址栏的链接是否以 <strong>https://m-pggaming.com</strong> 开头，这是最基础的确认方式。收藏夹里也建议保存正确的地址，避免通过第三方链接跳转。
+      </div>
+
+      <h2>一些不起眼但实用的细节</h2>
+      <p>页面底部通常会有简版的导航和常见问题链接，移动端适配做得也挺好，横竖屏切换都不会出现排版错乱。另外，如果你在浏览过程中需要返回上一级，面包屑导航会显示当前位置，点击就能跳回去，不用一直按浏览器的返回。</p>
+
+      <p>对于经常使用的功能模块，可以考虑浏览器的书签功能直接定位，省去每次从头翻找的步骤。当然，直接通过 <a href="https://m-pggaming.com">pg游戏</a> 首页进入也是完全没问题的。</p>
+    </div>
+
+    <!-- 访问句卡片（自然嵌入链接） -->
+    <div class="visit-sentence">
+      <p>如果你打算开始熟悉这个平台，最直接的方式就是打开 <a href="https://m-pggaming.com">pg游戏</a> 看一眼今天的页面结构。没有什么比亲自划动几下更能了解它的布局和风格了。熟悉之后，每次访问都会更加从容。</p>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+      <h3 style="color: #0b3b35; font-weight: 600; margin-bottom: 12px; font-size: 1.1rem;">❓ 常见小问题</h3>
+
+      <details>
+        <summary>页面加载慢怎么办？</summary>
+        <p>可以先检查自己的网络连接，或者尝试刷新一次。如果持续较慢，可以稍后再试，有时候是本地网络波动造成的。</p>
+      </details>
+      <details>
+        <summary>在手机上浏览体验如何？</summary>
+        <p>移动端做了专门的适配，卡片和按钮大小都适合手指操作，横竖屏都可以正常使用。个别页面如果显示异常，可以尝试清理浏览器缓存。</p>
+      </details>
+      <details>
+        <summary>如何确认我访问的是正确页面？</summary>
+        <p>浏览器地址栏显示 https://m-pggaming.com 就是官方页面。建议通过收藏夹或直接输入地址访问，避免使用不明来源的短链接。</p>
+      </details>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-note">
+      一份来自日常视角的指南 · 内容仅供参考
+    </div>
+
+  </div>
+</body>
+</html>
