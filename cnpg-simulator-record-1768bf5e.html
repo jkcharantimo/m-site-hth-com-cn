@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pg模拟器 – 稳定、轻量的场景测试入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fde9d8 0%, #f9d6b3 100%);
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #2e241f;
+    }
+
+    .page-wrap {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    /* 导航 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 250, 240, 0.75);
+      backdrop-filter: blur(6px);
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      box-shadow: 0 4px 12px rgba(180, 110, 60, 0.08);
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .navbar .logo {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #7f4e2d;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4d3428;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.3rem 0.1rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #c0845c;
+      color: #7a4b2b;
+    }
+
+    /* 主要内容卡片 */
+    .card {
+      background: #fffcf7;
+      border-radius: 32px;
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 8px 28px rgba(130, 80, 40, 0.08);
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 3rem 1.5rem 2.2rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #593d2c;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-section .subhead {
+      font-size: 1.15rem;
+      color: #6a4d3b;
+      max-width: 620px;
+      margin: 0 auto 1.2rem;
+      line-height: 1.6;
+    }
+
+    .hero-section .desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #4b3629;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero-section .desc a {
+      color: #9b6842;
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1.5px dotted #cba07e;
+      transition: border-bottom 0.2s, color 0.2s;
+    }
+
+    .hero-section .desc a:hover {
+      border-bottom-style: solid;
+      color: #7e4e2c;
+    }
+
+    /* 场景模块 —— 三列卡片 */
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .scene-card {
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 2px 12px rgba(100, 60, 30, 0.04);
+      border: 1px solid #f3e7db;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+
+    .scene-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(120, 70, 35, 0.07);
+    }
+
+    .scene-card h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #614231;
+      margin-bottom: 0.75rem;
+    }
+
+    .scene-card p {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: #4d3a2e;
+    }
+
+    .scene-card .tag {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #f8eee6;
+      color: #7b553b;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    /* 说明 / 常见提示区块 */
+    .info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 1.6rem 0 0.8rem;
+    }
+
+    .info-item {
+      background: #fcf7f0;
+      border-radius: 20px;
+      padding: 1.4rem 1.8rem;
+      border-left: 5px solid #dbb594;
+    }
+
+    .info-item h4 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #553d2e;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-item p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #4b372b;
+    }
+
+    .info-item p a {
+      color: #9a6845;
+      text-decoration: none;
+      border-bottom: 1px solid #dbb594;
+      transition: border 0.15s;
+    }
+
+    .info-item p a:hover {
+      border-bottom-width: 2px;
+      color: #794d2c;
+    }
+
+    /* 底部窄说明 */
+    .footnote {
+      margin: 2rem 0 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #6b5241;
+      opacity: 0.8;
+    }
+
+    /* 响应式 */
+    @media (max-width: 850px) {
+      .scenes-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 570px) {
+      body {
+        padding: 1.2rem 0.9rem;
+      }
+      .navbar {
+        padding: 0.6rem 1.2rem;
+        border-radius: 40px;
+        justify-content: center;
+      }
+      .nav-links {
+        gap: 1rem;
+        justify-content: center;
+      }
+      .card {
+        padding: 1.8rem 1.2rem;
+      }
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      .scenes-grid {
+        grid-template-columns: 1fr;
+      }
+      .info-item {
+        padding: 1rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+      <span class="logo">◈ 模拟入口</span>
+      <div class="nav-links">
+        <a href="#">使用说明</a>
+        <a href="#">场景参考</a>
+        <a href="#">常见问题</a>
+        <a href="#">版本动态</a>
+      </div>
+    </nav>
+
+    <!-- hero + 核心介绍 -->
+    <div class="card hero-section">
+      <h1>pg模拟器 · 轻量测试入口</h1>
+      <p class="subhead">面向开发与验证的稳定环境，围绕场景快速搭建。</p>
+      <p class="desc">
+        日常调试或功能验证时，一个可靠且可复现的模拟环境能省去很多重复工作。  
+        你可以在 <a href="https://cnpg--simulator.com">pg模拟器</a> 上直接选择典型场景，无需本地堆积配置，  
+        就能快速获得一个贴近真实情况的测试空间。页面结构清晰，适合反复对照与调整。
+      </p>
+    </div>
+
+    <!-- 三个场景模块 -->
+    <div class="card" style="padding-bottom: 2rem;">
+      <h2 style="font-size: 1.6rem; font-weight: 600; color: #563d2d; margin-bottom: 0.2rem; letter-spacing: -0.2px;">常用场景模块</h2>
+      <p style="color: #634a38; margin-bottom: 0.8rem; font-size: 0.95rem;">以下情景覆盖了多数基础验证需求，每个模块内都包含预设参数与说明。</p>
+      <div class="scenes-grid">
+        <div class="scene-card">
+          <h3>连接与认证</h3>
+          <p>模拟客户端连接、身份验证和权限校验流程。支持不同的认证方式，快速检查配置是否按预期生效。</p>
+          <span class="tag">网络层验证</span>
+        </div>
+        <div class="scene-card">
+          <h3>数据操作</h3>
+          <p>包含常用 CRUD 、索引及简单事务场景。通过预设数据集观察执行计划与响应特征，适合对比调优。</p>
+          <span class="tag">功能验证</span>
+        </div>
+        <div class="scene-card">
+          <h3>并发与隔离</h3>
+          <p>模拟多会话、锁等待以及隔离级别的影响。帮助理解不同负载下的行为差异，便于提前发现潜在冲突。</p>
+          <span class="tag">行为分析</span>
+        </div>
+      </div>
+      <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #634a38; border-top: 1px solid #eee5db; padding-top: 1rem;">
+        每个模块都附带简短说明，你也可以在此基础上调整参数，进一步贴合自己的测试目标。
+      </p>
+    </div>
+
+    <!-- 常见说明 / FAQ 摘要 -->
+    <div class="card">
+      <h2 style="font-size: 1.6rem; font-weight: 600; color: #563d2d; margin-bottom: 0.4rem;">一些常见说明</h2>
+      <div class="info-block">
+        <div class="info-item">
+          <h4>环境初始状态</h4>
+          <p>加载场景后，所有配置均为预设默认值，不会保留上次的修改记录。如果你需要复用特定设定，建议自行保存快照。</p>
+        </div>
+        <div class="info-item">
+          <h4>关于链接与引用</h4>
+          <p>页面中涉及外部资源或详细文档时，通常会指向<a href="https://cnpg--simulator.com">pg模拟器</a>的主页对应部分。你可以直接在该站内浏览各场景的完整参数与说明。</p>
+        </div>
+        <div class="info-item">
+          <h4>浏览器与兼容性</h4>
+          <p>建议使用最新版本的 Chrome、Firefox 或 Edge，部分渲染或交互依赖现代 CSS 特性。移动端浏览时界面会自动调整，但宽屏下信息展示更完整。</p>
+        </div>
+      </div>
+      <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #5b4536; border-top: 1px solid #eee5db; padding-top: 1rem;">
+        如果你在某个场景下遇到预期之外的表现，可以先核对参数范围，或参考模块内的提示信息。
+      </p>
+    </div>
+
+    <!-- 底部轻说明 -->
+    <div class="footnote">
+      <span>pg模拟器 · 基于场景的轻量测试</span>
+    </div>
+
+  </div>
+</body>
+</html>
